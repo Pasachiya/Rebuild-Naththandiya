@@ -1,16 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 export default function HeroSlider() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const basePath = "/Rebuild-Naththandiya"
   
   // Hero images
   const slides = [
-    '/hero1.jpg',
-    '/hero2.jpg',
-    '/hero3.jpg',
-    '/hero4.jpg',
+    `${basePath}/hero1.jpg`,
+    `${basePath}/hero2.jpg`,
+    `${basePath}/hero3.jpg`,
+    `${basePath}/hero4.jpg`,
   ]
 
   // Auto-advance slides every 5 seconds
