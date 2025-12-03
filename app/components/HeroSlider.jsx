@@ -23,54 +23,84 @@ export default function HeroSlider() {
   }, [slides.length])
 
   return (
-    <section className="bg-gray-50 py-16">
-      <div className="container mx-auto px-4 max-w-6xl">
-        {/* Title and description */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-black">
-            Rebuild Naththandiya
-          </h1>
-          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Together, we can help restore hope and education to the children of Naththandiya. 
-            Every child deserves the tools they need to learn, grow, and dream again.
-          </p>
+    <section className="relative w-full h-screen min-h-[600px] overflow-hidden">
+      {/* Background image slider */}
+      {slides.map((slide, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-opacity duration-1000 ${
+            index === currentSlide ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <img
+            src={slide}
+            alt={`Naththandiya community ${index + 1}`}
+            className="w-full h-full object-cover"
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
+      ))}
 
-        {/* Image slider */}
-        <div className="relative w-full max-w-4xl mx-auto">
-          <div className="relative h-64 md:h-96 overflow-hidden rounded-lg shadow-lg">
-            {slides.map((slide, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-opacity duration-1000 ${
-                  index === currentSlide ? 'opacity-100' : 'opacity-0'
-                }`}
+      {/* Content overlay */}
+      <div className="relative z-10 h-full flex items-center justify-center">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="text-center text-white">
+            {/* Title */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 drop-shadow-lg">
+              Rebuild Naththandiya
+            </h1>
+            
+            {/* Description */}
+            <p className="text-xl md:text-2xl lg:text-3xl max-w-4xl mx-auto leading-relaxed mb-8 drop-shadow-md font-light">
+              Together, we can help restore hope and education to the children of Naththandiya. 
+              Every child deserves the tools they need to learn, grow, and dream again.
+            </p>
+
+            {/* Optional: Call to action button */}
+            <div className="mt-8">
+              <a
+                href="#donate"
+                className="inline-block bg-primary hover:bg-opacity-90 text-white font-semibold 
+                           px-8 py-4 rounded-lg text-lg transition-all shadow-lg 
+                           hover:shadow-xl hover:scale-105"
               >
-                <img
-                  src={slide}
-                  alt={`Naththandiya community ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Slide indicators */}
-          <div className="flex justify-center mt-4 gap-2">
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  index === currentSlide 
-                    ? 'bg-primary w-8' 
-                    : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+                Donate Now
+              </a>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Slide indicators */}
+      <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-3">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlide(index)}
+            className={`h-3 rounded-full transition-all shadow-lg ${
+              index === currentSlide 
+                ? 'bg-primary w-12' 
+                : 'bg-white bg-opacity-60 hover:bg-opacity-100 w-3'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+        <svg 
+          className="w-6 h-6 text-white opacity-75" 
+          fill="none" 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          strokeWidth="2" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
       </div>
     </section>
   )
